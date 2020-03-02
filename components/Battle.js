@@ -2,44 +2,9 @@
 
 const Roll = require('../../Roll/Roll');
 const Logger = require('../libs/Logger');
-const getNumberBetweenMinMax = require('../../Roll/libs/getNumberBetweenMinAndMax');
-
-// for annotation and linting purposes
-const Hero = require('./Hero').default;
+const { getSortedHeroesByInitiativeRoll, attackDamage } = require('./Battle.helper');
 
 const log = Logger();
-
-/**
- * Return the roll of a hero's initiative roll.
- * @param {Hero} hero
- * @returns {number} the initiative roll result.
- */
-const rollInitiative = (hero) => Roll.D(20) + hero.initiativeRollBonus();
-
-/**
- * @param {Hero} hero 
- * @returns {number} the attack damage roll result.
- */
-const attackDamage = (hero) => Roll.D(hero.attackDamageRoll());
-
-/**
- * Returns an ordered hero list based on the performed initiative roll
- * @param {Hero[]} heroes 
- * @returns {Hero[]} array of IDs shortened based on initiative roll
- */
-const getSortedHeroesByInitiativeRoll = (...heroes) => {
-  const heroesWithInitiativeRolls = heroes.map((hero) => ({hero, initiativeRoll: rollInitiative(hero)}));
-  const heroesWithInitiativeRollsOrdered = heroesWithInitiativeRolls
-                                    .sort((result1, result2) => {
-                                      if (result1.initiativeRoll === result2.initiativeRoll) {
-                                        return [`result${getNumberBetweenMinMax(1,2).toString()}`];
-                                      }
-
-                                      return result1.initiativeRoll > result2.initiativeRoll ? result1 : result2;
-                                    });
-  
-  return heroesWithInitiativeRollsOrdered.map(heroWithRoll => heroWithRoll.hero);
-}
 
 const attackPhase = (attackerHero, defenderHero) => {
   const attackRoll = Roll.D(20);
