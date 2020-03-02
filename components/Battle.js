@@ -1,14 +1,13 @@
 'use strict';
 
-const Roll = require('../Roll/Roll');
-const getNumberBetweenMinMax = require('../Roll/libs/getNumberBetweenMinAndMax');
-
-const Logger = require('./libs/Logger');
-const log = Logger();
-
+const Roll = require('../../Roll/Roll');
+const Logger = require('../libs/Logger');
+const getNumberBetweenMinMax = require('../../Roll/libs/getNumberBetweenMinAndMax');
 
 // for annotation and linting purposes
-const Hero = require('./Hero');
+const Hero = require('./Hero').default;
+
+const log = Logger();
 
 /**
  * Return the roll of a hero's initiative roll.
@@ -16,12 +15,6 @@ const Hero = require('./Hero');
  * @returns {number} the initiative roll result.
  */
 const rollInitiative = (hero) => Roll.D(20) + hero.initiativeRollBonus();
-
-/**
- * @param {Hero} hero 
- * @returns {number} the attack roll result.
- */
-const attackRoll = (hero) => Roll.D(20) + hero.attackRollBonus();
 
 /**
  * @param {Hero} hero 
@@ -34,8 +27,7 @@ const attackDamage = (hero) => Roll.D(hero.attackDamageRoll());
  * @param {Hero[]} heroes 
  * @returns {Hero[]} array of IDs shortened based on initiative roll
  */
-const attackOrder = (...heroes) => {
-  if (heroes.length < 2) return [];
+const getSortedHeroesByInitiativeRoll = (...heroes) => {
   const heroesWithInitiativeRolls = heroes.map((hero) => ({hero, initiativeRoll: rollInitiative(hero)}));
   const heroesWithInitiativeRollsOrdered = heroesWithInitiativeRolls
                                     .sort((result1, result2) => {
@@ -79,7 +71,7 @@ const Battle = (heroLeft, heroRight) => {
   console.log('');
 
   do {
-    const [attacker, defender] = attackOrder(heroLeft, heroRight);
+    const [attacker, defender] = getSortedHeroesByInitiativeRoll(heroLeft, heroRight);
     attackPhase(attacker, defender);
     defender.HP() > 0 && attackPhase(defender, attacker);
   } while (heroLeft.HP() > 0 && heroRight.HP() > 0)
@@ -90,5 +82,4 @@ const Battle = (heroLeft, heroRight) => {
   
 }
 
-
-Battle(new Hero("Hercules"), new Hero("Gandalf"));
+exports.default = Battle;
