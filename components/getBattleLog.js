@@ -3,7 +3,15 @@
 const Roll = require('../../Roll/Roll');
 const { getSortedHeroesByInitiativeRoll, attackDamage } = require('./Battle.helper');
 
-// #region Experimental
+// for annotation and linting purposes
+const Hero = require('./Hero').default;
+
+/**
+ * Emulates an attack phase and return a battleLogEntry with phase === 'FIGHT' or 'FIGHT_ENDED'
+ * @param {Hero} attackerFighter 
+ * @param {Hero} defendingFighter
+ * @returns {Object} battleLogEntry with enough information to represent this attacks phase
+ */
 const getAttackPhaseResult = (attackerFighter, defendingFighter) => {
   const attackPhaseResult = {
     phase: 'FIGHT',
@@ -45,7 +53,12 @@ const getAttackPhaseResult = (attackerFighter, defendingFighter) => {
 
   return attackPhaseResult;
 }
-
+/**
+ * Create and returns a battleLog for the Given Input Fighters.
+ * @param {Hero} fighterLeft The first fighter.
+ * @param {Hero} fighterRight The second fighter.
+ * @returns {Object[]} battleLog with battlelogEntries which represent every step of the fight.
+ */
 const getBattleLog = (fighterLeft, fighterRight) => {
   const battleLog = [];
   let eventIDCounter = 0;

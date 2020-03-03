@@ -1,4 +1,4 @@
-const getBattleLog = require('./components/Battle').default;
+const getBattleLog = require('./components/getBattleLog').default;
 const representBattle = require('./components/Representation').default;
 const Hero = require('./components/Hero').default;
 

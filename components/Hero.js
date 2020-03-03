@@ -1,7 +1,7 @@
 'use strict';
 
 const Roll = require('../../Roll/Roll');
-const randomID = require('../libs/randomID');
+const { randomID } = require('../libs');
 
 /**
  * A Functional component that represents a hero

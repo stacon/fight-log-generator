@@ -1,5 +1,6 @@
 // for annotation and linting purposes
 const Hero = require('./Hero').default;
+
 const Roll = require('../../Roll/Roll');
 const getNumberBetweenMinMax = require('../../Roll/libs/getNumberBetweenMinAndMax');
 

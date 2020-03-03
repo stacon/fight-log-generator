@@ -1,6 +1,11 @@
 
-const getStrTimes = require('../libs/getStrTimes').default;
+const { getStrTimes } = require('../libs');
 
+
+/**
+ * Visually represents (consoles) fighter's HP in a line (eg. "Muhammad Ali   : [###############     ](72)"")
+ * @param  {...{name: string, HP: number}} fightersNameAndHP objects with fighter'name and HP
+ */
 const representHP = (...fightersNameAndHP) => {
   fightersNameAndHP.forEach(({name, HP}) => {
     const fighterNameWithTrailingSpace = name + getStrTimes(' ', 15-name.length);
@@ -9,6 +14,11 @@ const representHP = (...fightersNameAndHP) => {
   });
 }
 
+/**
+ * Visually represents (consoles) fighters' names
+ * @param {string} firstFighterName 
+ * @param {string} secondFighterName 
+ */
 const representAnnouncement = (firstFighterName, secondFighterName) => {
   console.log('');
   console.log('=================================================');
@@ -17,6 +27,10 @@ const representAnnouncement = (firstFighterName, secondFighterName) => {
   console.log('');
 }
 
+/**
+ * Visually represents (consoles) a battaleLogEntry with phase === 'FIGHT'
+ * @param {Object} battleLogEntry 
+ */
 const representAttack = (battleLogEntry) => {
   const { 
     hitResult, 
@@ -48,6 +62,10 @@ const representAttack = (battleLogEntry) => {
   }
 }
 
+/**
+ * Visually represents (consoles) a battaleLogEntry with phase === 'FIGHT_ENDED'
+ * @param {Object} battleLogEntry 
+ */
 const representFightEnding = (battleLogEntry) => {
   const { 
     attackerName, 
@@ -65,6 +83,10 @@ const representFightEnding = (battleLogEntry) => {
   console.info(`The winner by knockout is: ${attackerName}!`);
 }
 
+/**
+ * Visually represents (consoles) a battaleLogEntry
+ * @param {Object} battleLogEntry 
+ */
 const representBattleLogEntry = (battleLogEntry) => {
   const { 
     phase, 
@@ -98,7 +120,7 @@ const representBattleLogEntry = (battleLogEntry) => {
 }
 
 /**
- * Represent the fight's battlelog
+ * Represents fight's battlelog
  * @param {Object[]} battleLog 
  * @param {number} timeInterval in ms, will represent the battle with scrolling text, with pauses between event given this value
  * @param {boolean} withConsoleLogRefresh console will show one thing a time if this boolean is set to true
