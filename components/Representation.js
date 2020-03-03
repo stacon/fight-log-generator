@@ -20,11 +20,9 @@ const representHP = (...fightersNameAndHP) => {
  * @param {string} secondFighterName 
  */
 const representAnnouncement = (firstFighterName, secondFighterName) => {
-  console.log('');
-  console.log('=================================================');
+  console.log('\n=================================================');
   console.log(`${firstFighterName} fights against ${secondFighterName}`);
-  console.log('=================================================');
-  console.log('');
+  console.log('=================================================\n');
 }
 
 /**
@@ -42,18 +40,15 @@ const representAttack = (battleLogEntry) => {
   switch (hitResult) {
     case('NORMAL'):
     case('CRITICAL'): {
-      console.log(`${attackerName} ${hitResult === 'CRITICAL' ? 'power strikes' : 'jabs'} ${defenderName} for ${inflictedDamage} damage`);
-      console.log('');
+      console.log(`${attackerName} ${hitResult === 'CRITICAL' ? 'power strikes' : 'jabs'} ${defenderName} for ${inflictedDamage} damage\n`);
       break;
     }
     case('DODGED'): {
-      console.log(`${defenderName} dodges ${attackerName}'s hit` );
-      console.log('');
+      console.log(`${defenderName} dodges ${attackerName}'s hit\n` );
       break;
     }
     case('BLOCKED'): {
-      console.log(`${attackerName}'s attacks was blocked effectively by ${defenderName}` );
-      console.log('');
+      console.log(`${attackerName}'s attack was blocked effectively by ${defenderName}\n` );
       break;
     }
     default: {
@@ -80,7 +75,7 @@ const representFightEnding = (battleLogEntry) => {
     console.info(`${attackerName} knocks out ${defenderName} with a ${inflictedDamage} damage blow.`);
   }
 
-  console.info(`The winner by knockout is: ${attackerName}!`);
+  console.info(`\nThe winner by knockout is: ${attackerName}!`);
 }
 
 /**
@@ -96,25 +91,21 @@ const representBattleLogEntry = (battleLogEntry) => {
     case ('ANNOUNCEMENT'): {
       const { fighterLeft, fighterRight } = battleLogEntry;
       representAnnouncement(fighterLeft.name(), fighterRight.name());
-      console.log('');
       break;
     }
     case ('FIGHT'): {
-      console.log('');
-      console.log('');
+      console.log('\n');
       representAttack(battleLogEntry);
       break;
     }
     case ('FIGHT_ENDED'): {
-      console.log('');
-      console.log('');
-      console.log('');
+      console.log('\n\n');
       representFightEnding(battleLogEntry);
       console.log('');
       break;
     }
     default: {
-      throw `$Uknown phase entry: ${phase}`;
+      throw `Uknown phase entry: ${phase}`;
     }
   }
 }
@@ -127,6 +118,28 @@ const representBattleLogEntry = (battleLogEntry) => {
  */
 function representBattle(battleLog, timeInterval = 0, withConsoleLogRefresh = false) {
   const { fighterLeft } = battleLog.find(battleLogEntry => battleLogEntry.phase === 'ANNOUNCEMENT');
+  if(timeInterval > 0 ) {
+    let i = 0;
+    const fightEventsInterval = setInterval(() => {
+      if (withConsoleLogRefresh) console.clear();
+
+      representBattleLogEntry(battleLog[i]);
+    
+      if (battleLog[i].phase !== 'ANNOUNCEMENT'){
+        const { attackerName, defenderName, attackerHP, defenderHP} = battleLog[i];
+        (fighterLeft.name() === attackerName) ? representHP({name: attackerName, HP: attackerHP}, {name: defenderName, HP: defenderHP} ) : representHP({name: defenderName, HP: defenderHP}, {name: attackerName, HP: attackerHP});
+      }
+
+      if (battleLog[i].phase === 'FIGHT_ENDED') {
+        clearInterval(fightEventsInterval)
+      }
+
+      i++;
+    }, timeInterval);
+    
+    return;
+  }
+
   battleLog.forEach(battleLogEntry => {
     representBattleLogEntry(battleLogEntry);
     

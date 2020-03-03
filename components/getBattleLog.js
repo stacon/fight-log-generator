@@ -12,13 +12,17 @@ const Hero = require('./Hero').default;
  * @param {Hero} defendingFighter
  * @returns {Object} battleLogEntry with enough information to represent this attacks phase
  */
-const getAttackPhaseResult = (attackerFighter, defendingFighter) => {
+const getAttackPhaseResult = (fighterLeft, fighterRight) => {
+
+  // Returns an array after fighters initiative rolls. Highest roll becomes the first attacker and it references the initial Hero Object
+  const [attacker, defender] = getSortedHeroesByInitiativeRoll(fighterLeft, fighterRight);
+
   const attackPhaseResult = {
     phase: 'FIGHT',
-    attackerName: attackerFighter.name(),
-    attackerHP: attackerFighter.HP(),
-    defenderName: defendingFighter.name(),
-    defenderHP: defendingFighter.HP(),
+    attackerName: attacker.name(),
+    attackerHP: attacker.HP(),
+    defenderName: defender.name(),
+    defenderHP: defender.HP(),
     inflictedDamage: 0,
     hitResult: 'NORMAL'
   };
@@ -30,13 +34,13 @@ const getAttackPhaseResult = (attackerFighter, defendingFighter) => {
     attackPhaseResult.hitResult = 'CRITICAL';
   }
 
-  const attackRollSucceeded = (attackRoll + attackerFighter.attackRollBonus() - defendingFighter.AC()) > 0;
-  const inflictedDamage = attackDamage(attackerFighter) * (isCritical ? 2 : 1); // Critical inficts double Damage
-  const totalInfictedDamage = inflictedDamage - defendingFighter.damageReduction();
+  const attackRollSucceeded = (attackRoll + attacker.attackRollBonus() - defender.AC()) > 0;
+  const inflictedDamage = attackDamage(attacker) * (isCritical ? 2 : 1); // Critical inficts double Damage
+  const totalInfictedDamage = inflictedDamage - defender.damageReduction();
 
   if ((attackRollSucceeded || isCritical) && totalInfictedDamage > 0) {
-    const lifeLeftAfterHit = defendingFighter.HP() - totalInfictedDamage;
-    attackPhaseResult.defenderHP = defendingFighter.HP(lifeLeftAfterHit);
+    const lifeLeftAfterHit = defender.HP() - totalInfictedDamage;
+    attackPhaseResult.defenderHP = defender.HP(lifeLeftAfterHit);
 
     attackPhaseResult.inflictedDamage = totalInfictedDamage;
   }  
@@ -47,7 +51,7 @@ const getAttackPhaseResult = (attackerFighter, defendingFighter) => {
     attackPhaseResult.hitResult = 'DODGED';;
   }
 
-  if (attackerFighter.HP() < 1 || defendingFighter.HP() < 1) {
+  if (attacker.HP() < 1 || defender.HP() < 1) {
     attackPhaseResult.phase = 'FIGHT_ENDED';
   }
 
@@ -63,11 +67,10 @@ const getBattleLog = (fighterLeft, fighterRight) => {
   const battleLog = [];
   let eventIDCounter = 0;
 
-  battleLog.push({eventID: ++eventIDCounter , phase: 'ANNOUNCEMENT',fighterLeft, fighterRight})
+  battleLog.push({eventID: ++eventIDCounter , phase: 'ANNOUNCEMENT', fighterLeft, fighterRight})
 
   do {
-    const [attacker, defender] = getSortedHeroesByInitiativeRoll(fighterLeft, fighterRight);
-    battleLog.push({eventID: ++eventIDCounter, ...getAttackPhaseResult(attacker,defender)});
+    battleLog.push({eventID: ++eventIDCounter, ...getAttackPhaseResult(fighterLeft,fighterRight)});
   } while (fighterLeft.HP() > 0 && fighterRight.HP() > 0)
 
   return battleLog;
