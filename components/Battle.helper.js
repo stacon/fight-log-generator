@@ -1,31 +1,31 @@
 // for annotation and linting purposes
-const Hero = require('./Hero').default;
+const Fighter = require('./Fighter').Fighter;
 
 const Roll = require('../../Roll/Roll');
 const getNumberBetweenMinMax = require('../../Roll/libs/getNumberBetweenMinAndMax');
 
 /**
- * Return the roll of a hero's initiative roll.
- * @param {Hero} hero
+ * Return the roll of a fighter's initiative roll.
+ * @param {Fighter} fighter
  * @returns {number} the initiative roll result.
  */
-const rollInitiative = (hero) => Roll.D(20) + hero.initiativeRollBonus();
+const rollInitiative = (fighter) => Roll.D(20) + fighter.initiativeRollBonus();
 
 /**
- * @param {Hero} hero 
+ * @param {Fighter} fighter 
  * @returns {number} the attack damage roll result.
  */
-const attackDamage = (hero) => Roll.D(hero.attackDamageRoll());
+const attackDamage = (fighter) => Roll.D(fighter.attackDamageRoll());
 
 /**
- * Returns an ordered hero list based on the performed initiative roll
- * @param {Hero[]} heroes 
- * @returns {Hero[]} array of IDs shortened based on initiative roll
+ * Returns an ordered fighter list based on the performed initiative roll
+ * @param {Fighter[]} fighters 
+ * @returns {Fighter[]} array of IDs shortened based on initiative roll
  */
-const getSortedHeroesByInitiativeRoll = (...heroes) => {
-  const heroesWithInitiativeRolls = heroes.map((hero) => ({hero, initiativeRoll: rollInitiative(hero)}));
-  const heroesWithInitiativeRollsOrdered = (
-    heroesWithInitiativeRolls
+const getSortedFightersByInitiativeRoll = (...fighters) => {
+  const fightersWithInitiativeRolls = fighters.map((fighter) => ({fighter, initiativeRoll: rollInitiative(fighter)}));
+  const fightersWithInitiativeRollsOrdered = (
+    fightersWithInitiativeRolls
         .sort((result1, result2) => {
           if (result1.initiativeRoll === result2.initiativeRoll) {
             return getNumberBetweenMinMax(0,1) === 0 ? -1 : 1;
@@ -35,10 +35,10 @@ const getSortedHeroesByInitiativeRoll = (...heroes) => {
         })
   );
   
-  return heroesWithInitiativeRollsOrdered.map(heroWithRoll => heroWithRoll.hero);
+  return fightersWithInitiativeRollsOrdered.map(fighterWithRoll => fighterWithRoll.fighter);
 }
 
 module.exports = {
   attackDamage,
-  getSortedHeroesByInitiativeRoll
+  getSortedFightersByInitiativeRoll
 }

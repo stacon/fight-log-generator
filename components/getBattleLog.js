@@ -1,21 +1,21 @@
 'use strict';
 
 const Roll = require('../../Roll/Roll');
-const { getSortedHeroesByInitiativeRoll, attackDamage } = require('./Battle.helper');
+const { getSortedFightersByInitiativeRoll, attackDamage } = require('./Battle.helper');
 
 // for annotation and linting purposes
-const Hero = require('./Hero').default;
+const Fighter = require('./Fighter').default;
 
 /**
  * Emulates an attack phase and return a battleLogEntry with phase === 'FIGHT' or 'FIGHT_ENDED'
- * @param {Hero} attackerFighter 
- * @param {Hero} defendingFighter
+ * @param {Fighter} fighter1 
+ * @param {Fighter} fighter2
  * @returns {Object} battleLogEntry with enough information to represent this attacks phase
  */
-const getAttackPhaseResult = (fighterLeft, fighterRight) => {
+const getAttackPhaseResult = (fighter1, fighter2) => {
 
-  // Returns an array after fighters initiative rolls. Highest roll becomes the first attacker and it references the initial Hero Object
-  const [attacker, defender] = getSortedHeroesByInitiativeRoll(fighterLeft, fighterRight);
+  // Returns an array after fighters initiative rolls. Highest roll becomes the first attacker and it references the initial Fighter Object
+  const [attacker, defender] = getSortedFightersByInitiativeRoll(fighter1, fighter2);
 
   const attackPhaseResult = {
     phase: 'FIGHT',
@@ -59,19 +59,19 @@ const getAttackPhaseResult = (fighterLeft, fighterRight) => {
 }
 /**
  * Create and returns a battleLog for the Given Input Fighters.
- * @param {Hero} fighterLeft The first fighter.
- * @param {Hero} fighterRight The second fighter.
+ * @param {fighter1} fighter1 The first fighter.
+ * @param {fighter1} fighter2 The second fighter.
  * @returns {Object[]} battleLog with battlelogEntries which represent every step of the fight.
  */
-const getBattleLog = (fighterLeft, fighterRight) => {
+const getBattleLog = (fighter1, fighter2) => {
   const battleLog = [];
   let eventIDCounter = 0;
 
-  battleLog.push({eventID: ++eventIDCounter , phase: 'ANNOUNCEMENT', fighterLeft, fighterRight})
+  battleLog.push({eventID: ++eventIDCounter , phase: 'ANNOUNCEMENT', fighter1, fighter2})
 
   do {
-    battleLog.push({eventID: ++eventIDCounter, ...getAttackPhaseResult(fighterLeft,fighterRight)});
-  } while (fighterLeft.HP() > 0 && fighterRight.HP() > 0)
+    battleLog.push({eventID: ++eventIDCounter, ...getAttackPhaseResult(fighter1,fighter2)});
+  } while (fighter1.HP() > 0 && fighter2.HP() > 0)
 
   return battleLog;
 }

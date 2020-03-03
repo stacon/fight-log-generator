@@ -1,6 +1,6 @@
 const getBattleLog = require('./components/getBattleLog').default;
 const representBattle = require('./components/Representation').default;
-const Hero = require('./components/Hero').default;
+const Fighter = require('./components/Fighter').default;
 
-const battleLog = getBattleLog(new Hero("Muhammad Ali"), new Hero("Mike Tyson"));
-representBattle(battleLog, 2000, true);
+const battleLog = getBattleLog(new Fighter("Muhammad Ali"), new Fighter("Mike Tyson"));
+representBattle(battleLog);

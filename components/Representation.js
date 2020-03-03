@@ -9,8 +9,8 @@ const { getStrTimes } = require('../libs');
 const representHP = (...fightersNameAndHP) => {
   fightersNameAndHP.forEach(({name, HP}) => {
     const fighterNameWithTrailingSpace = name + getStrTimes(' ', 15-name.length);
-    const fighterLeftHPOutOf20 = Math.ceil((HP*20)/100);
-    console.log(`${fighterNameWithTrailingSpace}: [${getStrTimes('#', fighterLeftHPOutOf20)}${getStrTimes(' ', Math.min(20, 20 - fighterLeftHPOutOf20))}](${HP})`);
+    const fighter1HPOutOf20 = Math.ceil((HP*20)/100);
+    console.log(`${fighterNameWithTrailingSpace}: [${getStrTimes('#', fighter1HPOutOf20)}${getStrTimes(' ', Math.min(20, 20 - fighter1HPOutOf20))}](${HP})`);
   });
 }
 
@@ -89,8 +89,8 @@ const representBattleLogEntry = (battleLogEntry) => {
   
   switch (phase) {
     case ('ANNOUNCEMENT'): {
-      const { fighterLeft, fighterRight } = battleLogEntry;
-      representAnnouncement(fighterLeft.name(), fighterRight.name());
+      const { fighter1, fighter2 } = battleLogEntry;
+      representAnnouncement(fighter1.name(), fighter2.name());
       break;
     }
     case ('FIGHT'): {
@@ -117,7 +117,7 @@ const representBattleLogEntry = (battleLogEntry) => {
  * @param {boolean} withConsoleLogRefresh console will show one thing a time if this boolean is set to true
  */
 function representBattle(battleLog, timeInterval = 0, withConsoleLogRefresh = false) {
-  const { fighterLeft } = battleLog.find(battleLogEntry => battleLogEntry.phase === 'ANNOUNCEMENT');
+  const { fighter1 } = battleLog.find(battleLogEntry => battleLogEntry.phase === 'ANNOUNCEMENT');
   if(timeInterval > 0 ) {
     let i = 0;
     const fightEventsInterval = setInterval(() => {
@@ -127,7 +127,7 @@ function representBattle(battleLog, timeInterval = 0, withConsoleLogRefresh = fa
     
       if (battleLog[i].phase !== 'ANNOUNCEMENT'){
         const { attackerName, defenderName, attackerHP, defenderHP} = battleLog[i];
-        (fighterLeft.name() === attackerName) ? representHP({name: attackerName, HP: attackerHP}, {name: defenderName, HP: defenderHP} ) : representHP({name: defenderName, HP: defenderHP}, {name: attackerName, HP: attackerHP});
+        (fighter1.name() === attackerName) ? representHP({name: attackerName, HP: attackerHP}, {name: defenderName, HP: defenderHP} ) : representHP({name: defenderName, HP: defenderHP}, {name: attackerName, HP: attackerHP});
       }
 
       if (battleLog[i].phase === 'FIGHT_ENDED') {
@@ -145,7 +145,7 @@ function representBattle(battleLog, timeInterval = 0, withConsoleLogRefresh = fa
     
     if (battleLogEntry.phase !== 'ANNOUNCEMENT'){
       const { attackerName, defenderName, attackerHP, defenderHP} = battleLogEntry;
-      (fighterLeft.name() === attackerName) ? representHP({name: attackerName, HP: attackerHP}, {name: defenderName, HP: defenderHP} ) : representHP({name: defenderName, HP: defenderHP}, {name: attackerName, HP: attackerHP});
+      (fighter1.name() === attackerName) ? representHP({name: attackerName, HP: attackerHP}, {name: defenderName, HP: defenderHP} ) : representHP({name: defenderName, HP: defenderHP}, {name: attackerName, HP: attackerHP});
     }
   })
 }

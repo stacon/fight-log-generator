@@ -4,12 +4,12 @@ const Roll = require('../../Roll/Roll');
 const { randomID } = require('../libs');
 
 /**
- * A Functional component that represents a hero
- * @param {string} name hero's display name 
+ * A Functional component that represents a fighter
+ * @param {string} name fighter's display name 
  * @param {string} id a random has for distrinction purposes
  * @returns a group of getter methods and an HP setter method
  */
-function Hero(name, id) {
+function Fighter(name, id) {
   const _ID = id || 'temp' + randomID();
   const _name = name;
 
@@ -37,4 +37,4 @@ function Hero(name, id) {
   }
 }
 
-exports.default = Hero;
+exports.default = Fighter;
