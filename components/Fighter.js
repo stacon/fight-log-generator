@@ -5,26 +5,28 @@ const { randomID } = require('../libs');
 
 /**
  * A Functional component that represents a fighter
- * @param {string} name fighter's display name 
- * @param {string} id a random has for distrinction purposes
- * @returns a group of getter methods and an HP setter method
+ * @param {string} _ID Fighter'ss uniqueID. Default: random "tempXXXXXX".
+ * @param {number} _hp Fighter's health points. Default: 100.
+ * @param {number} _armorBonus Fighter's damage reduction against attacks. Default: roll 2d3
+ * @param {number} _initiativeRollBonus Fighter's initiative to attack bonus. Default: roll d4
+ * @param {number} _attackRollBonus Fighter's attackRoll bonus attop attack roll. Default: roll d6
+ * @param {number} _armorClass Fighter's armor class. Default: 8 + 3d3
+ * @param {{diceDimentions, times}} _attackDamageRoll Fighter's attack damage roll based on Roll API. Default 3d4
  */
-function Fighter(name, id) {
-  const _ID = id || 'temp' + randomID();
-  const _name = name;
-
-  let _hp = 100;
-  const _armorBonus = Roll.D(3, 2);
-
-  const _initiativeRollBonus = Roll.D(4);
-  const _attackRollBonus = Roll.D(6);
-  const _armorClass = 8 + Roll.D(3, 3);
-  
-  const _attackDamageRoll = {4: 3};
-
+function Fighter(
+  _ID = 'temp' + randomID(), 
+  _hp = 100, 
+  _armorBonus = Roll.D(3, 2),
+  _initiativeRollBonus = Roll.D(4),
+  _attackRollBonus = Roll.D(6),
+  _armorClass = 8 + Roll.D(3, 3),
+  _attackDamageRoll = {4: 3},
+) {
   return {
-    ID: () => _ID,
-    name: () => _name,
+    ID: (setID) => {
+      if(!!setID) _ID = setID;
+      return _ID;
+    },
     initiativeRollBonus: () => _initiativeRollBonus,
     attackRollBonus: () => _attackRollBonus,
     attackDamageRoll: () => _attackDamageRoll,

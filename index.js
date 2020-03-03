@@ -1,6 +1,14 @@
-const getBattleLog = require('./components/getBattleLog').default;
+'use strict';
+
+const getBattleInfo = require('./components/getBattleInfo').default;
 const representBattle = require('./components/Representation').default;
 const Fighter = require('./components/Fighter').default;
 
-const battleLog = getBattleLog(new Fighter("Muhammad Ali"), new Fighter("Mike Tyson"));
-representBattle(battleLog);
+const battleInfo = getBattleInfo(new Fighter(), new Fighter());
+
+representBattle(battleInfo, {
+  fighterName1: 'Mike Tyson',
+  fighterName2: 'Muhammad Ali',
+  timeInterval: 1000,
+  withConsoleLogRefresh: true,
+});

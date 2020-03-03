@@ -19,9 +19,9 @@ const getAttackPhaseResult = (fighter1, fighter2) => {
 
   const attackPhaseResult = {
     phase: 'FIGHT',
-    attackerName: attacker.name(),
+    attackerID: attacker.ID(),
     attackerHP: attacker.HP(),
-    defenderName: defender.name(),
+    defenderID: defender.ID(),
     defenderHP: defender.HP(),
     inflictedDamage: 0,
     hitResult: 'NORMAL'
@@ -61,20 +61,31 @@ const getAttackPhaseResult = (fighter1, fighter2) => {
  * Create and returns a battleLog for the Given Input Fighters.
  * @param {fighter1} fighter1 The first fighter.
  * @param {fighter1} fighter2 The second fighter.
- * @returns {Object[]} battleLog with battlelogEntries which represent every step of the fight.
+ * @returns {Object} battleInfo battleLog with battleLogEntries which represent every step of the fight.
+ * @returns {battleInfo.fighter1ID: string} first fighter's name.
+ * @returns {battleInfo.fighter1StartingHP: number} first fighter's starting HP.
+ * @returns {battleInfo.fighter2ID: string} second fighter's name.
+ * @returns {battleInfo.fighter2StartingHP: number} second fighter's starting HP.
+ * @returns {battleInfo.battleLog: Object[]} battleLog events array in chronological order.
+ * 
  */
-const getBattleLog = (fighter1, fighter2) => {
-  const battleLog = [];
+const getBattleInfo = (fighter1, fighter2) => {
+  const battleInfo = {
+    fighter1ID: fighter1.ID(),
+    fighter1StartingHP: fighter1.HP(),
+    fighter2ID: fighter1.ID(),
+    fighter2StartingHP: fighter1.HP(),
+    battleLog: [],
+  }
+
   let eventIDCounter = 0;
 
-  battleLog.push({eventID: ++eventIDCounter , phase: 'ANNOUNCEMENT', fighter1, fighter2})
-
   do {
-    battleLog.push({eventID: ++eventIDCounter, ...getAttackPhaseResult(fighter1,fighter2)});
+    battleInfo.battleLog.push({eventID: ++eventIDCounter, ...getAttackPhaseResult(fighter1,fighter2)});
   } while (fighter1.HP() > 0 && fighter2.HP() > 0)
 
-  return battleLog;
+  return battleInfo;
 }
 // #endregion Experimental
 
-exports.default = getBattleLog;
+exports.default = getBattleInfo;
