@@ -3,8 +3,20 @@
 const Roll = require('../../Roll/Roll');
 const Logger = require('../libs/Logger');
 const { getSortedHeroesByInitiativeRoll, attackDamage } = require('./Battle.helper');
-
+const getStrTimes = require('../libs/getStrTimes').default;
 const log = Logger();
+
+const showHP = (heroLeft, heroRight) => {
+  const heroLeftNameWithTrailingSpace = heroLeft.name() + getStrTimes(' ', 15-heroLeft.name().length);
+  const heroRightNameWithTrailingSpace = heroRight.name() + getStrTimes(' ', 15-heroRight.name().length);
+
+  const heroLeftHPOutOf20 = Math.round((heroLeft.HP()*20)/100);
+  const heroRightHPOutOf20 = Math.round((heroRight.HP()*20)/100);
+
+  console.log(`${heroLeftNameWithTrailingSpace}: [${getStrTimes('#', heroLeftHPOutOf20)}${getStrTimes(' ', Math.min(20, 20 - heroLeftHPOutOf20))}](${heroLeft.HP()})`);
+  console.log(`${heroRightNameWithTrailingSpace}: [${getStrTimes('#', heroRightHPOutOf20)}${getStrTimes(' ', Math.min(20, 20 - heroRightHPOutOf20))}](${heroRight.HP()})`);
+  console.log(``);
+}
 
 const attackPhase = (attackerHero, defenderHero) => {
   const attackRoll = Roll.D(20);
@@ -23,9 +35,6 @@ const attackPhase = (attackerHero, defenderHero) => {
   } else if (!attackRollSucceeded) {
     log(`${attackerHero.name()}'s attack was dogded by ${defenderHero.name()}`);
   }
-
-  console.log(`${attackerHero.name()}: ${attackerHero.HP()} - ${defenderHero.name()}: ${defenderHero.HP()}`);
-  console.log(``);
 }
 
 const Battle = (heroLeft, heroRight) => {
@@ -38,7 +47,7 @@ const Battle = (heroLeft, heroRight) => {
   do {
     const [attacker, defender] = getSortedHeroesByInitiativeRoll(heroLeft, heroRight);
     attackPhase(attacker, defender);
-    defender.HP() > 0 && attackPhase(defender, attacker);
+    showHP(heroLeft,heroRight);
   } while (heroLeft.HP() > 0 && heroRight.HP() > 0)
 
   console.log('');
