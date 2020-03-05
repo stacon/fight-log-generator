@@ -4,7 +4,7 @@
   "description": "A program that emulates a generic battle between two fighters. Represented by cli",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "mocha ./src --no-config --recursive"
   },
   "repository": {
     "type": "git",
