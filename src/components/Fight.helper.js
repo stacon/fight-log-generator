@@ -1,8 +1,8 @@
 // for annotation and linting purposes
 const Fighter = require('./Fighter').Fighter;
 
-const Roll = require('../../../Roll/Roll');
-const getNumberBetweenMinMax = require('../../../Roll/libs/getNumberBetweenMinAndMax');
+const Roll = require('../../../roll').default;
+const getNumberBetweenMinMax = require('../../../roll/src/libs/getNumberBetweenMinAndMax');
 
 /**
  * Return the roll of a fighter's initiative roll.

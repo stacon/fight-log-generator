@@ -1,14 +1,8 @@
 'use strict';
 
-const getBattleInfo = require('./src/components/getBattleInfo').default;
-const representBattle = require('./src/components/Representation').default;
+const getFightInfo = require('./src/components/getFightInfo').default;
 const Fighter = require('./src/components/Fighter').default;
 
-const battleInfo = getBattleInfo(new Fighter(), new Fighter());
+const fightInfo = getFightInfo(Fighter(), Fighter());
 
-representBattle(battleInfo, {
-  fighterName1: 'Mike Tyson',
-  fighterName2: 'Muhammad Ali',
-  timeInterval: 1000,
-  withConsoleLogRefresh: true,
-});
+module.exports = fightInfo;
