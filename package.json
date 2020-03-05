@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stacon/Battle.git"
+    "url": "git+https://github.com/stacon/fight-generator.git"
   },
   "keywords": [
     "battle",
@@ -18,9 +18,9 @@
   "author": "Constantinos Stathis",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/stacon/Battle/issues"
+    "url": "https://github.com/stacon/fight-generator/issues"
   },
-  "homepage": "https://github.com/stacon/Battle#readme",
+  "homepage": "https://github.com/stacon/fight-generator#readme",
   "devDependencies": {
     "expect": "^25.1.0",
     "mocha": "^7.1.0"

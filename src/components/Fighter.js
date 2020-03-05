@@ -1,6 +1,6 @@
 'use strict';
 
-const Roll = require('../../../Roll/Roll');
+const Roll = require('../../../roll').default;
 const { randomID } = require('../libs');
 
 /**

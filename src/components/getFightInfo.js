@@ -1,16 +1,16 @@
 'use strict';
 
-const Roll = require('../../../Roll/Roll');
-const { getSortedFightersByInitiativeRoll, attackDamage } = require('./Battle.helper');
+const Roll = require('../../../roll').default;
+const { getSortedFightersByInitiativeRoll, attackDamage } = require('./Fight.helper');
 
 // for annotation and linting purposes
 const Fighter = require('./Fighter').default;
 
 /**
- * Emulates an attack phase and return a battleLogEntry with phase === 'FIGHT' or 'FIGHT_ENDED'
+ * Emulates an attack phase and return a fightLogEntry with phase === 'FIGHT' or 'FIGHT_ENDED'
  * @param {Fighter} fighter1 
  * @param {Fighter} fighter2
- * @returns {Object} battleLogEntry with enough information to represent this attacks phase
+ * @returns {Object} fightLogEntry with enough information to represent this attacks phase
  */
 const getAttackPhaseResult = (fighter1, fighter2) => {
 
@@ -58,34 +58,34 @@ const getAttackPhaseResult = (fighter1, fighter2) => {
   return attackPhaseResult;
 }
 /**
- * Create and returns a battleLog for the Given Input Fighters.
+ * Create and returns a fightLog for the Given Input Fighters.
  * @param {fighter1} fighter1 The first fighter.
  * @param {fighter1} fighter2 The second fighter.
- * @returns {Object} battleInfo battleLog with battleLogEntries which represent every step of the fight.
- * @returns {battleInfo.fighter1ID: string} first fighter's name.
- * @returns {battleInfo.fighter1StartingHP: number} first fighter's starting HP.
- * @returns {battleInfo.fighter2ID: string} second fighter's name.
- * @returns {battleInfo.fighter2StartingHP: number} second fighter's starting HP.
- * @returns {battleInfo.battleLog: Object[]} battleLog events array in chronological order.
+ * @returns {Object} fightInfo fightLog with fightLogEntries which represent every step of the fight.
+ * @returns {fightInfo.fighter1ID: string} first fighter's name.
+ * @returns {fightInfo.fighter1StartingHP: number} first fighter's starting HP.
+ * @returns {fightInfo.fighter2ID: string} second fighter's name.
+ * @returns {fightInfo.fighter2StartingHP: number} second fighter's starting HP.
+ * @returns {fightInfo.fightLog: Object[]} fightLog events array in chronological order.
  * 
  */
-const getBattleInfo = (fighter1, fighter2) => {
-  const battleInfo = {
+const getFightInfo = (fighter1, fighter2) => {
+  const fightInfo = {
     fighter1ID: fighter1.ID(),
     fighter1StartingHP: fighter1.HP(),
     fighter2ID: fighter1.ID(),
     fighter2StartingHP: fighter1.HP(),
-    battleLog: [],
+    fightLog: [],
   }
 
   let eventIDCounter = 0;
 
   do {
-    battleInfo.battleLog.push({eventID: ++eventIDCounter, ...getAttackPhaseResult(fighter1,fighter2)});
+    fightInfo.fightLog.push({eventID: ++eventIDCounter, ...getAttackPhaseResult(fighter1,fighter2)});
   } while (fighter1.HP() > 0 && fighter2.HP() > 0)
 
-  return battleInfo;
+  return fightInfo;
 }
 // #endregion Experimental
 
-exports.default = getBattleInfo;
+exports.default = getFightInfo;
