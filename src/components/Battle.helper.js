@@ -1,21 +1,21 @@
 // for annotation and linting purposes
 const Fighter = require('./Fighter').Fighter;
 
-const Roll = require('../../Roll/Roll');
-const getNumberBetweenMinMax = require('../../Roll/libs/getNumberBetweenMinAndMax');
+const Roll = require('../../../Roll/Roll');
+const getNumberBetweenMinMax = require('../../../Roll/libs/getNumberBetweenMinAndMax');
 
 /**
  * Return the roll of a fighter's initiative roll.
  * @param {Fighter} fighter
  * @returns {number} the initiative roll result.
  */
-const rollInitiative = (fighter) => Roll.D(20) + fighter.initiativeRollBonus();
+const rollInitiative = (fighter) => Roll.d(20) + fighter.initiativeRollBonus();
 
 /**
  * @param {Fighter} fighter 
  * @returns {number} the attack damage roll result.
  */
-const attackDamage = (fighter) => Roll.D(fighter.attackDamageRoll());
+const attackDamage = (fighter) => Roll.d(fighter.attackDamageRoll());
 
 /**
  * Returns an ordered fighter list based on the performed initiative roll

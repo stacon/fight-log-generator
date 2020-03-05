@@ -1,8 +1,8 @@
 'use strict';
 
-const getBattleInfo = require('./components/getBattleInfo').default;
-const representBattle = require('./components/Representation').default;
-const Fighter = require('./components/Fighter').default;
+const getBattleInfo = require('./src/components/getBattleInfo').default;
+const representBattle = require('./src/components/Representation').default;
+const Fighter = require('./src/components/Fighter').default;
 
 const battleInfo = getBattleInfo(new Fighter(), new Fighter());
 

@@ -1,6 +1,6 @@
 'use strict';
 
-const Roll = require('../../Roll/Roll');
+const Roll = require('../../../Roll/Roll');
 const { randomID } = require('../libs');
 
 /**
@@ -16,10 +16,10 @@ const { randomID } = require('../libs');
 function Fighter(
   _ID = 'temp' + randomID(), 
   _hp = 100, 
-  _armorBonus = Roll.D(3, 2),
-  _initiativeRollBonus = Roll.D(4),
-  _attackRollBonus = Roll.D(6),
-  _armorClass = 8 + Roll.D(3, 3),
+  _armorBonus = Roll.d(3, 2),
+  _initiativeRollBonus = Roll.d(4),
+  _attackRollBonus = Roll.d(6),
+  _armorClass = 8 + Roll.d(3, 3),
   _attackDamageRoll = {4: 3},
 ) {
   return {

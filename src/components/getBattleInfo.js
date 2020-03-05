@@ -1,6 +1,6 @@
 'use strict';
 
-const Roll = require('../../Roll/Roll');
+const Roll = require('../../../Roll/Roll');
 const { getSortedFightersByInitiativeRoll, attackDamage } = require('./Battle.helper');
 
 // for annotation and linting purposes
@@ -27,7 +27,7 @@ const getAttackPhaseResult = (fighter1, fighter2) => {
     hitResult: 'NORMAL'
   };
 
-  const attackRoll = Roll.D(20);
+  const attackRoll = Roll.d(20);
   const isCritical = attackRoll > 18;
 
   if (isCritical) {
