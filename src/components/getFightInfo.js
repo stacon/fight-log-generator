@@ -73,8 +73,8 @@ const getFightInfo = (fighter1, fighter2) => {
   const fightInfo = {
     fighter1ID: fighter1.ID(),
     fighter1StartingHP: fighter1.HP(),
-    fighter2ID: fighter1.ID(),
-    fighter2StartingHP: fighter1.HP(),
+    fighter2ID: fighter2.ID(),
+    fighter2StartingHP: fighter2.HP(),
     fightLog: [],
   }
 
