@@ -1,27 +1,27 @@
-#Fight generator
+# Fight generator
 
-##Description
+## Description
 Upon inporting this file, it dynamically creates a json object like the one below. It can be used as a representation of a fight between two sides.
 
-###Key Descriptions
-####Fightlog json
-"fighter1ID": "identifier of the first fighter"
-"fighter1StartingHP": "starting life points of first fighter"
-"fighter2ID": "identifier of the second fighter"
-"fighter2StartingHP": "starting life points of second fighter"
-"fitghtLog": "Array of events that represent the battle"
+### Key Descriptions
+#### Fightlog json
+- "fighter1ID": "identifier of the first fighter"
+- "fighter1StartingHP": "starting life points of first fighter"
+- "fighter2ID": "identifier of the second fighter"
+- "fighter2StartingHP": "starting life points of second fighter"\n
+- "fitghtLog": "Array of events that represent the battle"\n\n
 
-####Fightlog event
-"eventID": "increasing number to enum events",
-"phase": "FIGHT | FIGHT_ENDED indicates the status of the battle",
-"attackerID": "phase attackers fighterID",
-"attackerHP": "phase attackers HP",
-"defenderID": "phase defenders fighterID",
-"defenderHP": "phase defender fighterID",
-"inflictedDamage": "damage inflicted from attacker to defender",
-"hitResult": "NORMAL | DODGED | CRITICAL | BLOCKED represents the hit result"
+#### Fightlog event
+- "eventID": "increasing number to enum events",
+- "phase": "FIGHT | FIGHT_ENDED indicates the status of the battle",
+- "attackerID": "phase attackers fighterID",
+- "attackerHP": "phase attackers HP",
+- "defenderID": "phase defenders fighterID",
+- "defenderHP": "phase defender fighterID",
+- "inflictedDamage": "damage inflicted from attacker to defender",
+- "hitResult": "NORMAL | DODGED | CRITICAL | BLOCKED represents the hit result"
 
-##Example output
+## Example output
 ```
 {
   "fighter1ID": "tempz74h448",
