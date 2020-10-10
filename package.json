@@ -1,9 +1,10 @@
 {
-  "name": "battle",
-  "version": "0.1.0",
-  "description": "A program that emulates a generic battle between two fighters. Represented by cli",
-  "main": "index.js",
+  "name": "@stacon/fight-log-generator",
+  "version": "1.0.0",
+  "description": "A program that exports fightLog function. Envoking this functions returns a JavaScript object which represents a battle.",
+  "main": "src/index.js",
   "scripts": {
+    "start": "node src/index.js",
     "test": "mocha ./src --no-config --recursive"
   },
   "repository": {
@@ -12,6 +13,8 @@
   },
   "keywords": [
     "battle",
+    "fight",
+    "log",
     "boxing",
     "rng"
   ],
