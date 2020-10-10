@@ -21,8 +21,15 @@ Upon inporting this file, it dynamically creates a json object like the one belo
 - "inflictedDamage": "damage inflicted from attacker to defender",
 - "hitResult": "NORMAL | DODGED | CRITICAL | BLOCKED represents the hit result"
 
-## Example output
+## Example
 ```
+const fightLog = require('@stacon/fight-log');
+
+const log = fightLog();
+
+console.log(log);
+
+// Example output below
 {
   "fighter1ID": "tempz74h448",
   "fighter1StartingHP": 100,
