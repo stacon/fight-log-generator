@@ -1,7 +1,11 @@
-'use strict';
+"use strict";
 
-const Roll = require('../../../roll').default;
-const { randomID } = require('../libs');
+const { Roll, d, sum } = require("@stacon/roll");
+const { randomID } = require("../libs");
+
+const D3 = d(3);
+const D4 = d(4);
+const D6 = d(6);
 
 /**
  * A Functional component that represents a fighter
@@ -14,29 +18,29 @@ const { randomID } = require('../libs');
  * @param {{diceDimentions, times}} _attackDamageRoll Fighter's attack damage roll based on Roll API. Default 3d4
  */
 function Fighter(
-  _ID = 'temp' + randomID(), 
-  _hp = 100, 
-  _armorBonus = Roll.d(3, 2),
-  _initiativeRollBonus = Roll.d(4),
-  _attackRollBonus = Roll.d(6),
-  _armorClass = 8 + Roll.d(3, 3),
-  _attackDamageRoll = {4: 3},
+  _ID = "temp" + randomID(),
+  _hp = 100,
+  _armorBonus = sum(Roll.times(2)(D3)),
+  _initiativeRollBonus = Roll(D4),
+  _attackRollBonus = Roll(D6),
+  _armorClass = 8 + sum(Roll.times(3)(D3)),
+  _attackDamageRoll = () => sum(Roll.times(3)(D4))
 ) {
   return {
     ID: (setID) => {
-      if(!!setID) _ID = setID;
+      if (!!setID) _ID = setID;
       return _ID;
     },
     initiativeRollBonus: () => _initiativeRollBonus,
     attackRollBonus: () => _attackRollBonus,
-    attackDamageRoll: () => _attackDamageRoll,
+    attackDamageRoll: () => _attackDamageRoll(),
     HP: (setHP) => {
-      if(!!setHP) _hp = setHP;
+      if (!!setHP) _hp = setHP;
       return _hp;
     },
     damageReduction: () => _armorBonus,
     AC: () => _armorClass,
-  }
+  };
 }
 
 exports.default = Fighter;
