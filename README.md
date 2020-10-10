@@ -1,10 +1,13 @@
 # Fight generator
 
 ## Description
-Upon inporting this file, it dynamically creates a JavaScript object like the one below. It can be used as a representation of a fight between two sides.
+
+A program that exports fightLog function. Envoking this functions returns a JavaScript object which represents a fight between two opponents.
 
 ### Key Descriptions
+
 #### Fightlog object
+
 - "fighter1ID": "identifier of the first fighter"
 - "fighter1StartingHP": "starting life points of first fighter"
 - "fighter2ID": "identifier of the second fighter"
@@ -12,6 +15,7 @@ Upon inporting this file, it dynamically creates a JavaScript object like the on
 - "fitghtLog": "Array of events that represent the battle"\n\n
 
 #### Fightlog event object
+
 - "eventID": "increasing number to enum events",
 - "phase": "FIGHT | FIGHT_ENDED indicates the status of the battle",
 - "attackerID": "phase attackers fighterID",
@@ -22,6 +26,7 @@ Upon inporting this file, it dynamically creates a JavaScript object like the on
 - "hitResult": "NORMAL | DODGED | CRITICAL | BLOCKED represents the hit result"
 
 ## Example
+
 ```
 const fightLog = require('@stacon/fight-log');
 

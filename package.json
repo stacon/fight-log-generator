@@ -1,7 +1,7 @@
 {
   "name": "@stacon/fight-log-generator",
   "version": "1.0.0",
-  "description": "A program that exports fightLog function. Envoking this functions returns a JavaScript object which represents a battle.",
+  "description": "A program that exports fightLog function. Envoking this functions returns a JavaScript object which represents a fight between two opponents.",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
